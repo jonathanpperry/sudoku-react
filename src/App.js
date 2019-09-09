@@ -22,8 +22,9 @@ function generateSudoku() {
         value: value,
         readonly: value !== null
       };
-      result.rows.push(row);
+      row.cols.push(col);
     }
+    result.rows.push(row);
   }
   return result;
 }
@@ -39,7 +40,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Sudoku Stack</h1>
+          <h1>Sudoku React</h1>
         </header>
         <SudokuBoard sudoku={this.state.sudoku} />
       </div>
