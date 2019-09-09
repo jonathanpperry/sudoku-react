@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import generator from "sudoku";
+import produce from "immer";
 import SudokuBoard from "./components/SudokuBoard";
 import "./App.css";
 
@@ -32,17 +33,26 @@ function generateSudoku() {
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = produce({}, () => ({
       sudoku: generateSudoku()
-    };
+    }));
   }
+
+  handleChange = e => {
+    this.setState(
+      produce(state => {
+        state.sudoku.rows[e.row].cols[e.col].value = e.value;
+      })
+    );
+  };
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <h1>Sudoku React</h1>
         </header>
-        <SudokuBoard sudoku={this.state.sudoku} />
+        <SudokuBoard sudoku={this.state.sudoku} onChange={this.handleChange} />
       </div>
     );
   }
